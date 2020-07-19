@@ -1,3 +1,28 @@
+
+<?php
+require 'conctar.php';
+
+
+$messaje= '';
+
+if(!empty($_POST['email'])&&
+      !empty($_POST['password'] ) ){
+    $sql = "INSERT INTO usuario(email, contraseña) VALUES(:email, :password)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':email',$_POST['email']);
+    $contraseña = password_hash($_POST['password'], PASSWORD_BCRYPT);
+    $stmt->bindParam(':password',$contraseña);
+    
+    if($stmt->execute()){
+        $messaje = 'Su correo y contraseña fue registrado exitosamente';
+        
+    }else{
+        $messaje = 'error';
+    }
+        
+}
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
